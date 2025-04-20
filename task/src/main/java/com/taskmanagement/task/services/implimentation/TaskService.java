@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class taskService implements ItaskService {
+public class TaskService implements ItaskService {
     private final ItaskRepository repository;
     private final ItaskMapper mapper;
 
