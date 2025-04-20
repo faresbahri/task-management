@@ -16,5 +16,7 @@ public interface BaseMapper<E, D> {
 
     List<E> toEntity(List<D> dtos);
 
-    Page<D> toDtoPage(Page<E> pageEntity);
+    default Page<D> toDtoPage(Page<E> pageEntity){
+        return pageEntity.map(this::toDto);
+    }
 }
