@@ -59,7 +59,7 @@ public class TaskController {
         log.info("createTask - start processing");
         try{
             TaskDTO saved = itaskService.saveTask(dto);
-            URI location = URI.create("/tasks/" + saved.getId());
+            URI location = URI.create("/api/tasks/" + saved.getId());
             log.info("createTask - end processing");
             return ResponseEntity.created(location).build();
 
