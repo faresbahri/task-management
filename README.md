@@ -47,9 +47,9 @@ The project demonstrates a full-stack task management application with in-memory
 
 ### H2 Database
 - http://localhost:8080/h2-console
-JDBC URL: jdbc:h2:mem:task
-Username: admin
-Password: admin
+JDBC URL: jdbc:h2:mem:task,
+Username: admin,
+Password: admin,
 
 ### Swagger interface
 - http://localhost:8080/swagger-ui/index.html
