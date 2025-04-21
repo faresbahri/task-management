@@ -1,0 +1,37 @@
+<div class="page">
+  <div style="width: 100%">
+    <h2 class="page-title">
+      {{ currentData.id ? "Update Task" : "Create Task" }}
+    </h2>
+  </div>
+
+  <div mat-dialog-content class="dialog-content">
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Description</mat-label>
+      <textarea
+        class="none-resize-textarea"
+        matInput
+        [(ngModel)]="currentData.description"
+        rows="4"
+        placeholder="Enter task description"
+      >
+      </textarea>
+    </mat-form-field>
+
+    <mat-radio-group [(ngModel)]="currentData.completed" class="status-group">
+      <mat-radio-button [value]="true" color="primary"
+        >Completed</mat-radio-button
+      >
+      <mat-radio-button [value]="false" color="primary"
+        >Uncompleted</mat-radio-button
+      >
+    </mat-radio-group>
+  </div>
+
+  <div mat-dialog-actions class="action-buttons">
+    <button mat-button (click)="dialogRef.close()">Cancel</button>
+    <button mat-flat-button color="primary" (click)="save()">
+      {{ currentData.id ? "Update" : "Create" }}
+    </button>
+  </div>
+</div>

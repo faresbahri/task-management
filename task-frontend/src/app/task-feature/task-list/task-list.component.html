@@ -1,0 +1,86 @@
+<div class="page">
+  <div style="width: 100%">
+    <h2 class="page-title">{{ selectedStatus }} Tasks</h2>
+  </div>
+
+  <button mat-raised-button color="primary" (click)="createNewTask()">
+    Create new task
+  </button>
+  <div>
+    <div>
+      <div class="filter-section">
+        <label>
+          <input
+            type="radio"
+            name="status"
+            value="All"
+            [(ngModel)]="selectedStatus"
+            (change)="reloadData('All', true)"
+          />
+          All
+        </label>
+
+        <label>
+          <input
+            type="radio"
+            name="status"
+            value="Completed"
+            [(ngModel)]="selectedStatus"
+            (change)="reloadData('Completed', true)"
+          />
+          Completed
+        </label>
+
+        <label>
+          <input
+            type="radio"
+            name="status"
+            value="Uncompleted"
+            [(ngModel)]="selectedStatus"
+            (change)="reloadData('Uncompleted', true)"
+          />
+          Uncompleted
+        </label>
+      </div>
+      <mat-table [dataSource]="dataSource">
+        <!-- Description Column -->
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef class="description-column">
+            Description
+          </th>
+          <td mat-cell *matCellDef="let task">{{ task.description }}</td>
+        </ng-container>
+
+        <!-- Status Column -->
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let task">
+            {{ task.completed ? "Completed" : "Incomplete" }}
+          </td>
+        </ng-container>
+
+        <!-- Action Column -->
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef>Action</th>
+          <td mat-cell *matCellDef="let task">
+            <button mat-button color="primary" (click)="updateTask(task)">
+              Update status
+            </button>
+          </td>
+        </ng-container>
+
+        <!-- Table Header and Body -->
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </mat-table>
+
+      <!-- Pagination Controls -->
+      <mat-paginator
+        [length]="totalItems"
+        [pageSize]="pageSize"
+        (page)="onPageChange($event)"
+      >
+      </mat-paginator>
+    </div>
+  </div>
+</div>
