@@ -3,6 +3,10 @@ package com.taskmanagement.task.controllers;
 
 import com.taskmanagement.task.dtos.TaskDTO;
 import com.taskmanagement.task.services.interfaces.ItaskService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +23,11 @@ import java.net.URI;
 public class TaskController {
     private  final ItaskService itaskService;
 
+    @Operation(summary = "Get paginated list of tasks", description = "Returns a page of tasks, optionally filtered by completion status")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Tasks retrieved successfully"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
     @GetMapping()
     public ResponseEntity<Page<TaskDTO>> getPageableTasks(
             @RequestParam(required = false) Boolean completed,
@@ -36,6 +45,13 @@ public class TaskController {
         }
     }
 
+
+    @Operation(summary = "Get task by ID", description = "Returns the task for the provided ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Task found"),
+            @ApiResponse(responseCode = "404", description = "Task not found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
     @GetMapping("/id/{id}")
     public ResponseEntity<TaskDTO> getTaskById(@PathVariable("id") Long id){
         log.info("getTaskById - start processing (taskId: {})", id);
@@ -54,6 +70,12 @@ public class TaskController {
         }
     }
 
+
+    @Operation(summary = "Create a new task", description = "Adds a new task to the database")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Task created successfully"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
     @PostMapping()
     public ResponseEntity<Void> createTask(@RequestBody TaskDTO dto){
         log.info("createTask - start processing");
@@ -69,7 +91,12 @@ public class TaskController {
         }
     }
 
-
+    @Operation(summary = "Update existing task", description = "Updates task information by ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Task updated successfully"),
+            @ApiResponse(responseCode = "404", description = "Task not found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
     @PutMapping("/{id}")
     public ResponseEntity<TaskDTO> updateTask(@PathVariable Long id, @RequestBody TaskDTO dto) {
         log.info("updateTask - start processing");

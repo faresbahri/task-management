@@ -21,7 +21,7 @@ public class TaskService implements ItaskService {
 
     @Override
     public Page<TaskDTO> getTaskPage(final int page, final int size,final Boolean completed) {
-        Sort sort = Sort.by(Sort.Order.by("id").with(Sort.Direction.fromString("asc")));
+        Sort sort = Sort.by(Sort.Order.by("id").with(Sort.Direction.fromString("desc")));
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<Task> taskPage;
         if(completed != null){
