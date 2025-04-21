@@ -6,12 +6,12 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.scss'
+  styleUrl: './home.component.scss',
 })
 export class HomeComponent {
-  constructor(private readonly router: Router){}
+  constructor(private readonly router: Router) {}
 
   navigateToTaskList() {
-    this.router.navigate(['/tasks'])
+    this.router.navigate(['/tasks']);
   }
 }

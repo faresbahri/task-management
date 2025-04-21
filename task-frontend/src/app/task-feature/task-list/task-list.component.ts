@@ -48,11 +48,20 @@ export class TaskListComponent implements OnInit {
   }
 
   loadDataSource(data: Page<Task>) {
-    this.dataSource.data = data.content;
-    this.totalItems = data.totalElements;
-    if (this.paginator) {
-      this.paginator.length = data.totalElements;
+    if(data.content.length > 0){
+      this.dataSource.data = data.content;
+      this.totalItems = data.totalElements;
+      if (this.paginator) {
+        this.paginator.length = data.totalElements;
+        this.paginator.pageIndex = this.currentPage;
+      }
+    }else{
+      if(this.currentPage>0){
+        this.currentPage = this.currentPage -1;
+        this.reloadData(this.selectedStatus, false)
+      }
     }
+    
   }
 
   reloadData(status: string, fromTemplate: boolean) {
@@ -129,7 +138,6 @@ export class TaskListComponent implements OnInit {
           this.taskManagementService.createTask(task).subscribe({
             next: () => {
               const message = 'Task saved successfully!';
-              const messageType = 'snack-success';
               this.notifyUser(message);
               this.reloadData(this.selectedStatus, false);
             },
